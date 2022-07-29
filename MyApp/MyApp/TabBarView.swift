@@ -9,16 +9,18 @@ import SwiftUI
 
 struct TabBarView: View {
     @State var products = Product.sampleData
+    @State var orders = Order.orderSampleData
+    @State var product = Product(name: "", description: "", makePublic: false, quantity: 0, unit: .kg, price: 10, pickUpBy: .day_after, imageName: "")
     var body: some View {
         TabView(selection: /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Selection@*/.constant(1)/*@END_MENU_TOKEN@*/) {
             VStack {
                 MyProduceListView(productList: $products)
             }.tabItem { Label("My Produce", systemImage: "list.bullet") }.tag(1)
             VStack {
-               // DetailEditView(product: $products[0])
+                AddProductView(productList: $products, product: $product, data: product.data)
             } .tabItem { Label("Add item", systemImage: "square.and.pencil") }.tag(2)
             VStack {
-                MyOrdersListView(orderList: Order.orderSampleData)
+                SegmentedControlView(orderList: $orders)
             } .tabItem { Label("My Orders", systemImage: "list.bullet.below.rectangle") }.tag(3)
         }
         
@@ -34,10 +36,7 @@ struct TabBarView_Previews: PreviewProvider {
 
 /* TO DO-
  6. make Quantity, price, unit, pickUpBy, makePublic functionable
- 5. image upload
- 4. add new product (append to array)
- 2. update order page (buttons: confirm/reject order, etc), order details
- 3. segmented view: pending & completed orders
+  
+ SET MY ORDERS VIEW AS DEFAULT FOR UPDATE ORDER VIEW
  
- 7. login page
  */

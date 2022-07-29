@@ -79,3 +79,10 @@ extension Product {
         Product(name: "apples", description: "sweet, red apples. 789 York Street", makePublic: true, quantity: 4, unit: .number, price: 5.25, pickUpBy: .tomorrow, imageName: "apples")]
 }
 #endif
+
+extension Product {
+    static func retrieveNamefromID(productId: UUID) -> String {
+        let product = Product.sampleData.first(where: {$0.id == productId})
+        return product?.name ?? ""
+    }
+}

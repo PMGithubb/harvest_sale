@@ -8,33 +8,37 @@
 import SwiftUI
 
 struct MyOrdersListView: View {
-    let orderList: [Order]
+    @State var data = Order.Data()
+    @Binding var orderList: [Order]
+    @Binding var showCompletedOrders: Bool
     var body: some View {
         VStack {
-            Text("My Orders")
-                .font(.largeTitle)
-                .bold()
-                .padding(.top)
+            
             List {
-                ForEach(orderList) { order in
-                    HStack {
-                        Image(systemName: "person")
-                            .resizable()
-                            .frame(width: 40, height: 40)
-                            .cornerRadius(10)
-                        Text("\(order.customerName)'s order")
-                            .bold()
-                            .padding(.vertical, 13.0)
-                        EditButton()
+                ForEach($orderList) { $order in
+                    if order.isComplete == showCompletedOrders {
+                        NavigationLink(destination: UpdateOrderView(order: $order, data: order.data)) {
+                            HStack {
+                                Image(systemName: "person.fill")
+                                    .resizable()
+                                    .frame(width: 20, height: 20)
+                                Text("\(order.customerName)'s order")
+                                    .bold()
+                                    .padding(.vertical, 13.0)
+                                Button("Edit") {
+                                    data = order.data
+                                }
+                            }
+                        }
                     }
                 }
             }
-         }.tabItem { Label("My Produce", systemImage: "list.bullet") }.tag(3)
+         }
     }
 }
 
 struct MyOrdersListView_Previews: PreviewProvider {
     static var previews: some View {
-        MyOrdersListView(orderList: Order.orderSampleData)
+        MyOrdersListView(orderList: .constant(Order.orderSampleData), showCompletedOrders: .constant(false))
     }
 }

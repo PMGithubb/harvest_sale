@@ -48,7 +48,8 @@ struct DetailEditView: View {
                         product.update(from: data)
                         self.presentationMode.wrappedValue.dismiss()
                     }
-                    .frame(alignment: .center)
+                    .buttonStyle(.bordered)
+                    .font(.system(.title3))
                // }
             }
         }
