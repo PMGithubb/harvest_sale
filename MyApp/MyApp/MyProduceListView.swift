@@ -16,6 +16,7 @@ struct MyProduceListView: View {
                 .font(.largeTitle)
                 .bold()
                 .padding(.top)
+                .foregroundColor(.titleBrown)
             List {
                 ForEach($productList) { $product in
                     NavigationLink(destination: DetailEditView(product: $product, data: product.data)) {
@@ -30,11 +31,16 @@ struct MyProduceListView: View {
                             Button("Edit") {
                                 data = product.data
                             }
+                            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .trailing)
+                            .foregroundColor(.maximumGreen)
                         }
                     }
                 }
             }
+            .background(Color.backgroundYellow)
         }
+        .background(Color.backgroundYellow)
+        .frame(height: 700, alignment: .top)
     }
 }
 

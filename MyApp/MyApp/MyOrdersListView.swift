@@ -13,7 +13,6 @@ struct MyOrdersListView: View {
     @Binding var showCompletedOrders: Bool
     var body: some View {
         VStack {
-            
             List {
                 ForEach($orderList) { $order in
                     if order.isComplete == showCompletedOrders {
@@ -28,12 +27,23 @@ struct MyOrdersListView: View {
                                 Button("Edit") {
                                     data = order.data
                                 }
+                                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .trailing)
+                                .foregroundColor(.maximumGreen)
+                                
                             }
                         }
                     }
                 }
             }
+            .background(Color.backgroundYellow)
+//            .onAppear { // ADD THESE
+//              UITableView.appearance().backgroundColor = .clear
+//            }
+//            .onDisappear {
+//              UITableView.appearance().backgroundColor = .systemGroupedBackground
+//            }
          }
+        .foregroundColor(.textBrown)
     }
 }
 

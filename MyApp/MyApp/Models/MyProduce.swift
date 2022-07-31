@@ -67,11 +67,18 @@ struct Product: Identifiable {
     }
 }
 
+extension UISegmentedControl {
+    override open func didMoveToSuperview() {
+        super.didMoveToSuperview()
+        self.setContentHuggingPriority(.defaultLow, for: .vertical)  // << here !!
+    }
+}
+
 #if DEBUG
 extension Product {
     static var sampleData = [
         Product(name: "Tomato", description: "Pick-up at 123 York Street", makePublic: true, quantity: 10, unit: .number, price: 2.05, pickUpBy: .today, imageName: "Tomato"),
-        Product(name: "Cucumber", description: "Small cucumbers. Pick-up at 234 York Street", makePublic: false, quantity: 2.5, unit: .number, price: 5, pickUpBy: .tomorrow, imageName: "Cucumber"),
+        Product(name: "Cucmbwrs", description: "Small cucumbers. At 234 York Street", makePublic: false, quantity: 2.5, unit: .number, price: 5, pickUpBy: .tomorrow, imageName: "Cucumber"),
         Product(name: "Zucchini", description: "Large and small both available. Pick-up at 345 York Street", makePublic: true, quantity: 2, unit: .kg, price: 10.50, pickUpBy: .day_after, imageName: "Zucchini"),
         Product(name: "Carrot", description: "Baby carrots, sweet. Pick-up at 456 York Street", makePublic: true, quantity: 8.6, unit: .g, price: 20.99, pickUpBy: .tomorrow, imageName: "Carrot"),
         Product(name: "Green Chillies", description: "Very spicy, small chillies. 567 York Street", makePublic: false, quantity: 11.25, unit: .kg, price: 11, pickUpBy: .today, imageName: "Green Chillies"),

@@ -11,20 +11,28 @@ struct SegmentedControlView: View {
     @State private var selectedValue: Bool = false
     @Binding var orderList: [Order]
     var body: some View {
-        VStack {
-            Text("My Orders")
-                .font(.largeTitle)
-                .bold()
-                //.padding(.top)
-            Picker("My Orders", selection: $selectedValue, content: {
-                Text("Pending Orders").tag(false)
-                Text("Completed Orders").tag(true)
-            })
-            .pickerStyle(SegmentedPickerStyle()
-                ) // <1>
-                MyOrdersListView(orderList: $orderList, showCompletedOrders: $selectedValue)
+        ZStack {
+            Color.backgroundYellow
+                .ignoresSafeArea()
+            VStack {
+                Text("My Orders")
+                    .font(.largeTitle)
+                    .bold()
+                    .foregroundColor(.titleBrown)
+                    //.padding(.top)
+                Picker("My Orders", selection: $selectedValue, content: {
+                    Text("Pending Orders").tag(false)
+                    Text("Completed Orders").tag(true)
+                })
+                .frame(height: 20)
+                .pickerStyle(SegmentedPickerStyle()
+                    ) // <1>
+                    MyOrdersListView(orderList: $orderList, showCompletedOrders: $selectedValue)
+                    Color.backgroundYellow
+                    .ignoresSafeArea()
                 //.background(.pink)
-            
+                
+            }
         }
     }
 }

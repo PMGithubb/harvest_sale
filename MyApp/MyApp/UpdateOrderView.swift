@@ -14,11 +14,16 @@ struct UpdateOrderView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     var body: some View {
+        ZStack {
+            Color.backgroundYellow
+                .ignoresSafeArea()
+            
         VStack {
             Text("Order Details")
                 .font(.title)
                 .bold()
                 .padding(.bottom)
+                .foregroundColor(.titleBrown)
             HStack {
                 VStack (alignment: .leading){
                     Text("Customer Details:")
@@ -45,25 +50,26 @@ struct UpdateOrderView: View {
                 }.padding()
             }
             .padding()
-            .background(Color(hue: 0.126, saturation: 1.0, brightness: 1.0, opacity: 0.469))
+            .background(Color(hue: 0.299, saturation: 0.12, brightness: 0.997))
             .cornerRadius(20)
             
             Text("Update Order")
                 .font(.title)
                 .bold()
                 .padding(.top)
+                .foregroundColor(.titleBrown)
             
             HStack {
             HStack {
                 VStack {
                     Toggle(isOn: $data.isConfirmed, label: {
-                        Text("Confirm Order")
+                        Text("Accept Order")
                             .bold()
                     })
                         .disabled(data.isRejected == true)
                     
                     Toggle(isOn: $data.isRejected, label: {
-                        Text("Reject Order")
+                        Text("Decline Order")
                             .bold()
                     })
                     .disabled(data.isConfirmed == true)
@@ -86,21 +92,48 @@ struct UpdateOrderView: View {
             .padding()
             .cornerRadius(10)
             .overlay(RoundedRectangle(cornerRadius: 10)
-            .stroke(Color(.sRGB, red: 50/255, green: 50/255, blue: 50/255, opacity: 0.1), lineWidth: 3))
+                .stroke(Color(.sRGB, red: 50/255, green: 50/255, blue: 50/255, opacity: 0.1), lineWidth: 3)).background(Color(hue: 0.299, saturation: 0.12, brightness: 0.997)).cornerRadius(10)
             }.padding()
             
+//
+//            Button("Update") {
+//                order.update(from: data)
+//                self.presentationMode.wrappedValue.dismiss()
+//            }
+//            .buttonStyle(.bordered)
+//            .background(Color(hue: 0.292, saturation: 0.284, brightness: 1.0))
+//            .cornerRadius(15)
+//            .shadow(color: Color(hue: 0.315, saturation: 0.651, brightness: 0.531), radius: 5)
+//            .buttonBorderShape(.roundedRectangle)
+//            .padding()
+//            .foregroundColor(.black)
             
-            Button("Update") {
+            HStack {
+            Button(action: {
                 order.update(from: data)
                 self.presentationMode.wrappedValue.dismiss()
+            })
+            {
+                HStack{
+                    Spacer()
+                    Text("Update")
+                        .bold()
+                        .font(.title2)
+                        .foregroundColor(.white)
+                    Spacer()
+                }
+                .buttonStyle(.bordered)
+                .padding()
+                .background(Color.forestGreen)
+                .cornerRadius(5)
+                .shadow(color: Color(hue: 0.315, saturation: 0.651, brightness: 0.531), radius: 2.5)
+                .buttonBorderShape(.roundedRectangle)
+                .font(.system(.title3))
             }
-            .buttonStyle(.bordered)
-            .background(Color(hue: 0.292, saturation: 0.284, brightness: 1.0))
-            .cornerRadius(15)
-            .shadow(color: Color(hue: 0.315, saturation: 0.651, brightness: 0.531), radius: 5)
-            .buttonBorderShape(.roundedRectangle)
-            .padding()
-            .foregroundColor(.black)
+            .listRowBackground(Color.backgroundYellow)
+            }.padding()
+        }
+        .foregroundColor(.textBrown)
         }
     }
 }

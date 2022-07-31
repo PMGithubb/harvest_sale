@@ -62,8 +62,8 @@ struct Order: Identifiable {
 #if DEBUG
 extension Order {
     static var orderSampleData = [
-        Order(customerName: "Sammy", customerDetails: "sammy@gmail.com", isComplete: false, isConfirmed: false, setReminderOn: false, isRejected: false),
-        Order(customerName: "Sara Smith", customerDetails: "sara.smith@gmail.com", isComplete: false, isConfirmed: false, setReminderOn: false, isRejected: false)
+        Order(customerName: "Mickey Mouse", customerDetails: "mickey@gmail.com", isComplete: false, isConfirmed: false, setReminderOn: false, isRejected: false),
+        Order(customerName: "Donald Duck", customerDetails: "donald.duck@gmail.com", isComplete: false, isConfirmed: false, setReminderOn: false, isRejected: false)
     ]
 }
 #endif

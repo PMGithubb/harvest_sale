@@ -9,10 +9,10 @@ import SwiftUI
 
 struct AddProductView: View {
     @Binding var productList: Array<Product>
-    @Binding var product: Product
+    //@Binding var product: Product
     @State var data = Product.Data()
-    
-    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    @State private var showAlert = false
+    //@Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
  
     var body: some View {
         VStack {
@@ -20,46 +20,73 @@ struct AddProductView: View {
                 Section(header: Label("Add / edit item", systemImage: "square.and.pencil")) {
                     TextField("Product Name", text: $data.name)
                 }
+                
                 Section(header: Label("Add a description", systemImage: "square.and.pencil")) {
                     TextField("Description / Pick-up Address", text: $data.description)
                         .frame(height: 100, alignment: .top)
                 }
-//                    Section(header: Text("Choose Quantity")){
-//                        TextField(String(0), text: $data.quantity)
-//                            .frame(width: 100, height: 20)
 
-                    Section() {
-                        Picker("Unit", selection: $data.unit) {
-                            Text("Kilograms").tag(Unit.kg)
-                            Text("Number of items").tag(Unit.number)
-                            Text("Pounds").tag(Unit.lbs)
-                        }
-                        .pickerStyle(.wheel)
-                    }
-               // Section() {
-                 //   StepperView()
-               // }
+            Section() {
+                Picker("Image", selection: $data.imageName) {
+                    Image("Tomato").tag("Tomato")
+                    Image("Cucumber").tag("Cucumber")
+                    Image("apples").tag("apples")
+                    Image("Potatoes").tag("Potatoes")
+                    Image("Carrot").tag("Carrot")
+                    Image("Grapes").tag("Grapes")
+                }
+                .frame(height: 60)
+                .scaledToFit()
+                .pickerStyle(SegmentedPickerStyle())
+            }
+                
                 Section() {
                     Toggle(isOn: $data.makePublic) {
                         Text("Make Public")
                     }
                 }
-                //NavigationLink(destination: TabBarView()) {
-                    Button("Save") {
-                        product.update(from: data)
-                        productList.append(product)
-                        self.presentationMode.wrappedValue.dismiss()
+                
+                Button(action: {
+                    var product = Product(name: "", description: "", makePublic: false, quantity: 0, unit: .kg, price: 10, pickUpBy: .day_after, imageName: "")
+                    product.update(from: data)
+                    productList.append(product)
+                    data.name = ""
+                    data.description = ""
+                    data.imageName = ""
+                    showAlert = true
+                    //self.presentationMode.wrappedValue.dismiss()
+                })
+                {
+                    HStack{
+                        Spacer()
+                        Text("Save")
+                            .bold()
+                            .font(.title2)
+                            .foregroundColor(.white)
+                        Spacer()
                     }
                     .buttonStyle(.bordered)
+                    .padding()
+                    .background(Color.forestGreen)
+                    .cornerRadius(5)
+                    .shadow(color: Color(hue: 0.315, saturation: 0.651, brightness: 0.531), radius: 2.5)
+                    .buttonBorderShape(.roundedRectangle)
                     .font(.system(.title3))
-               // }
+                }
+                .alert(isPresented: $showAlert){
+                    Alert(title: Text("Successfully saved!"), message: Text("Your product has been added"), dismissButton: .default(Text("Ok")))
+                }
+                .listRowBackground(Color.backgroundYellow)
             }
+            .background(Color.backgroundYellow)
+            
         }
+        .foregroundColor(Color.textBrown)
     }
 }
 
 struct AddProductView_Previews: PreviewProvider {
     static var previews: some View {
-        AddProductView(productList: .constant(Product.sampleData), product: .constant(Product.sampleData[0]))
+        AddProductView(productList: .constant(Product.sampleData))
     }
 }

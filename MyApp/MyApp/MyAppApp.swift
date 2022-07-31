@@ -9,10 +9,15 @@ import SwiftUI
 
 @main
 struct MyAppApp: App {
+    init() {
+        UITableView.appearance().backgroundColor = .clear
+    }
+    
     var body: some Scene {
         WindowGroup {
             NavigationView {
                 TabBarView()
+                    .foregroundColor(.textBrown)
             }
         }
     }

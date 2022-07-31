@@ -19,40 +19,53 @@ struct DetailEditView: View {
                 Section(header: Label("Add / edit item", systemImage: "square.and.pencil")) {
                     TextField("Product Name", text: $data.name)
                 }
+                
                 Section(header: Label("Add a description", systemImage: "square.and.pencil")) {
                     TextField("Description / Pick-up Address", text: $data.description)
                         .frame(height: 100, alignment: .top)
+                        .lineLimit(/*@START_MENU_TOKEN@*/4/*@END_MENU_TOKEN@*/)
                 }
-//                    Section(header: Text("Choose Quantity")){
-//                        TextField(String(0), text: $data.quantity)
-//                            .frame(width: 100, height: 20)
-
-                    Section() {
-                        Picker("Unit", selection: $data.unit) {
-                            Text("Kilograms").tag(Unit.kg)
-                            Text("Number of items").tag(Unit.number)
-                            Text("Pounds").tag(Unit.lbs)
-                        }
-                        .pickerStyle(.wheel)
-                    }
-               // Section() {
-                 //   StepperView()
-               // }
+                
+                Section() {
+                    Image(product.imageName)
+                        .resizable()
+                        .frame(width: 310, height: 200)
+                        .cornerRadius(20)
+                }
+                
                 Section() {
                     Toggle(isOn: $data.makePublic) {
                         Text("Make Public")
                     }
                 }
-                //NavigationLink(destination: TabBarView()) {
-                    Button("Save") {
-                        product.update(from: data)
-                        self.presentationMode.wrappedValue.dismiss()
+                
+                Button(action: {
+                    product.update(from: data)
+                    self.presentationMode.wrappedValue.dismiss()
+                })
+                {
+                    HStack{
+                        Spacer()
+                        Text("Save")
+                            .bold()
+                            .font(.title2)
+                            .foregroundColor(.white)
+                        Spacer()
                     }
                     .buttonStyle(.bordered)
+                    .padding()
+                    .background(Color.forestGreen)
+                    .cornerRadius(5)
+                    .shadow(color: Color(hue: 0.315, saturation: 0.651, brightness: 0.531), radius: 2.5)
+                    .buttonBorderShape(.roundedRectangle)
                     .font(.system(.title3))
-               // }
+                }
+                .listRowBackground(Color.backgroundYellow)
+                
             }
+            .background(Color.backgroundYellow)
         }
+        .foregroundColor(Color.textBrown)
     }
 }
 
